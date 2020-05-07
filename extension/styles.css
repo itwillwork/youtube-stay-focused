@@ -1,0 +1,9 @@
+.youtube-stay-focused__blur {
+	filter: blur(5px) grayscale(100%);
+	opacity: 0.3;
+}
+
+.youtube-stay-focused__blur:hover {
+	filter: none;
+	opacity: 1;
+}
