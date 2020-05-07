@@ -22,6 +22,10 @@ const addBlur = (node) => {
   node.classList.add("youtube-stay-focused__blur");
 }
 
+const removeBlur = (node) => {
+  node.classList.remove("youtube-stay-focused__blur");
+}
+
 const getSentence = node => node.textContent;
 
 const hideRecommends = () => {
@@ -62,3 +66,25 @@ const debouncedHideRecommends = debounce(hideRecommends, 1000, { 'maxWait': 1000
 debouncedHideRecommends();
 setInterval(debouncedHideRecommends, 3000);
 window.addEventListener('scroll', debouncedHideRecommends);
+
+let oldHref = document.location.href;
+const bodyList = document.querySelector("body")
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (oldHref != document.location.href) {
+            oldHref = document.location.href;
+
+            const recommendsNodes = getRecomendsNodes();
+            recommendsNodes.forEach(node => {
+                removeBlur(node);
+            });
+        }
+    });
+});
+
+const config = {
+    childList: true,
+    subtree: true
+};
+
+observer.observe(bodyList, config);
