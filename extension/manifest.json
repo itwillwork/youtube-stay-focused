@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "version": "1.0",
   "name": "youtube-stay-focused",
-  "description": "Скрываем не тематические рекомендации YouTube",
+  "description": "Скрываем НЕ тематические рекомендации YouTube",
   "browser_action": {
     "default_icon": "logo.png"
   },
