@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack src/index.js -o extension/page-script.js --mode production",
+    "format": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
     "test": "jest"
   },
   "author": "",

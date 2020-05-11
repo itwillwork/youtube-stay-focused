@@ -1,105 +1,115 @@
 import prepareSenteces from './prepare-senteces';
 
 describe('prepare sentences', () => {
-	test('lower case', () => {
-		const sentences = ["Hello World"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world"]]);
-	});
-	
-	test('punctuation', () => {
-		const sentences = ["hello, world!? nope."];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world", "nope"]]);
-	});
+  test('lower case', () => {
+    const sentences = ['Hello World'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world']]);
+  });
 
-	test('other punctuation', () => {
-		const sentences = ["# $1 — A$AP Rocky - Multiply & Boulevard Depo / Pharaoh"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["aap", "rocki", "multipli", "boulevard", "depo", "pharaoh"]]);
-	});
+  test('punctuation', () => {
+    const sentences = ['hello, world!? nope.'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world', 'nope']]);
+  });
 
-	test('numbers', () => {
-		const sentences = ["hello world part 28"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world", "part"]]);
-	});
+  test('other punctuation', () => {
+    const sentences = [
+      '# $1 — A$AP Rocky - Multiply & Boulevard Depo / Pharaoh',
+    ];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([
+      ['aap', 'rocki', 'multipli', 'boulevard', 'depo', 'pharaoh'],
+    ]);
+  });
 
-	test('short words', () => {
-		const sentences = ["hello world no"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world"]]);
-	});
+  test('numbers', () => {
+    const sentences = ['hello world part 28'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world', 'part']]);
+  });
 
-	test('many spaces', () => {
-		const sentences = ["hello          \n              world"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world"]]);
-	});
+  test('short words', () => {
+    const sentences = ['hello world no'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world']]);
+  });
 
-	test('en stem', () => {
-		const sentences = ["hello worlds loading"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello", "world", "load"]]);
-	});
+  test('many spaces', () => {
+    const sentences = ['hello          \n              world'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world']]);
+  });
 
-	test('ru stem', () => {
-		const sentences = ["привет загадочный и неповторимый мир"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["привет", "загадочн", "неповторим", "мир"]]);
-	});
+  test('en stem', () => {
+    const sentences = ['hello worlds loading'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello', 'world', 'load']]);
+  });
 
-	test('hooks', () => {
-		const sentences = [" ' ` \"  [( ASAP 'Rocky' \"Purple Swag\" or What's Beef )] "];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["asap", "rocki", "purpl", "swag", "what", "beef"]]);
-	});
-	
-	test('links', () => {
-		const sentences = [`
+  test('ru stem', () => {
+    const sentences = ['привет загадочный и неповторимый мир'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['привет', 'загадочн', 'неповторим', 'мир']]);
+  });
+
+  test('hooks', () => {
+    const sentences = [
+      " ' ` \"  [( ASAP 'Rocky' \"Purple Swag\" or What's Beef )] ",
+    ];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([
+      ['asap', 'rocki', 'purpl', 'swag', 'what', 'beef'],
+    ]);
+  });
+
+  test('links', () => {
+    const sentences = [
+      `
 			  Follow A$AP Rocky 
 			► https://soundcloud.com/asvpxrocky
 			► https://www.facebook.com/asaprocky
 			► https://www.youtube.com/user/LIVELOVEASAPVEVO
-		`];
+		`,
+    ];
 
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["follow", "aap", "rocki"]]);
-	});
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['follow', 'aap', 'rocki']]);
+  });
 
-	test('service words, youtube', () => {
-		const sentences = ["hello Recommended for you Topic YouTube"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["hello"]]);
-	});
+  test('service words, youtube', () => {
+    const sentences = ['hello Recommended for you Topic YouTube'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['hello']]);
+  });
 
-	test('service words, music', () => {
-		const sentences = [
-			"A$AP Rocky - Bass (Official Video)",
-			"Yung Lean - Afghanistan (Prod. ZCR) ",
-			"Yung Lean - Highway Patrol (Feat. bladee) (Official Music Video)",
-			"21 Savage - Bank Account (Official Audio)",
-			"A$AP Mob - Yamborghini High (Official Music Video) ft. Juicy J",
-			"Kendrick Lamar - Backseat Freestyle (Explicit)",
-			"Lil Xan - Betrayed (Dir. by @_ColeBennett_)",
-			"Kill Me - Музыканты"
-		];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([
-			["aap", "rocki", "bass"],
-			["yung", "lean", "afghanistan", "zcr"],
-			["yung", "lean", "highwai", "patrol", "blade"],
-			["savag", "bank", "account"],
-			["aap", "mob", "yamborghini", "high", "juici"],
-			["kendrick", "lamar", "backseat", "freestyl", "explicit"],
-			["lil", "xan", "betrai", "_colebennett_"],
-			["kill", "музыкант"],
-		]);
-	});
-	
-	test('service words, trailer', () => {
-		const sentences = ["Scarface (Trailer #1) HD"];
-		const result = prepareSenteces(sentences);
-		expect(result).toEqual([["scarfac"]]);
-	});
+  test('service words, music', () => {
+    const sentences = [
+      'A$AP Rocky - Bass (Official Video)',
+      'Yung Lean - Afghanistan (Prod. ZCR) ',
+      'Yung Lean - Highway Patrol (Feat. bladee) (Official Music Video)',
+      '21 Savage - Bank Account (Official Audio)',
+      'A$AP Mob - Yamborghini High (Official Music Video) ft. Juicy J',
+      'Kendrick Lamar - Backseat Freestyle (Explicit)',
+      'Lil Xan - Betrayed (Dir. by @_ColeBennett_)',
+      'Kill Me - Музыканты',
+    ];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([
+      ['aap', 'rocki', 'bass'],
+      ['yung', 'lean', 'afghanistan', 'zcr'],
+      ['yung', 'lean', 'highwai', 'patrol', 'blade'],
+      ['savag', 'bank', 'account'],
+      ['aap', 'mob', 'yamborghini', 'high', 'juici'],
+      ['kendrick', 'lamar', 'backseat', 'freestyl', 'explicit'],
+      ['lil', 'xan', 'betrai', '_colebennett_'],
+      ['kill', 'музыкант'],
+    ]);
+  });
+
+  test('service words, trailer', () => {
+    const sentences = ['Scarface (Trailer #1) HD'];
+    const result = prepareSenteces(sentences);
+    expect(result).toEqual([['scarfac']]);
+  });
 });
