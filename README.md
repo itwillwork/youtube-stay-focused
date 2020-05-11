@@ -5,6 +5,4 @@
 Скрины в /screens
 
 Расширение в chrome маркете:
-https://chrome.google.com/webstore/detail/dakjckobpdmgdimicmhpoaelachhlbla/publish-delayed
-
-красивая иконка
+https://chrome.google.com/webstore/detail/youtube-stay-focused/enhfmpfmofdnhelhegdjanoaomlcieen
