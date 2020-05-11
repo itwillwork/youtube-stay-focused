@@ -6,3 +6,5 @@
 
 Расширение в chrome маркете:
 https://chrome.google.com/webstore/detail/dakjckobpdmgdimicmhpoaelachhlbla/publish-delayed
+
+красивая иконка

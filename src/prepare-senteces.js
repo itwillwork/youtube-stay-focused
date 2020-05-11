@@ -11,8 +11,32 @@ const stem = words => words.map(word => porterStemmerRu.stem(word)).map(word => 
 
 const NUMBER_REG_EXP = /^\d+$/;
 const MINIMAL_WORLD_LENGTH = 3;
+
+const STOP_WORDS = {
+	// common
+	"the": true,
+	
+	// youtube
+	"recommend": true,
+	"for": true,
+	"you": true,
+	"topic": true,
+	"youtub": true,
+	
+	// movies 
+	"trailer": true,
+	// music
+	"offici": true,
+	"music": true,
+	"video": true,
+	"audio": true,
+	"prod": true,
+	"feat": true,
+	"dir": true,
+};
+
 const filterMeaningfulWords = words => {
-	return words.filter(word => !NUMBER_REG_EXP.test(word)).filter(word => word.length >= MINIMAL_WORLD_LENGTH);
+	return words.filter(word => !NUMBER_REG_EXP.test(word)).filter(word => word.length >= MINIMAL_WORLD_LENGTH).filter(word => !STOP_WORDS[word]);
 };
 
 export default (sentences) => sentences.map(clear).map(tokenize).map(stem).map(filterMeaningfulWords);
