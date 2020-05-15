@@ -1,8 +1,10 @@
-### youtube-stay-focused
+# youtube-stay-focused
 
-Расширение скрывает не тематические видео в рекомендациях YouTube.
+Расширение скрывает НЕ тематические рекомендации YouTube.
 
-Скрины в /screens
+<img src="https://github.com/itwillwork/youtube-stay-focused/blob/master/screens/demo.gif?raw=true" width="800px" />
+<br />
+<br />
 
-Расширение в chrome маркете:
+**Расширение в chrome маркете:**
 https://chrome.google.com/webstore/detail/youtube-stay-focused/enhfmpfmofdnhelhegdjanoaomlcieen
