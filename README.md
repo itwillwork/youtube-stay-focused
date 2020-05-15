@@ -1,4 +1,4 @@
-# youtube-stay-focused
+### youtube-stay-focused
 
 Расширение скрывает НЕ тематические рекомендации YouTube.
 
@@ -8,3 +8,5 @@
 
 **Расширение в chrome маркете:**
 https://chrome.google.com/webstore/detail/youtube-stay-focused/enhfmpfmofdnhelhegdjanoaomlcieen
+<br />
+<br />
