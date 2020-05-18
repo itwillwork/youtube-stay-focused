@@ -2,7 +2,14 @@ const porterStemmerRu = require('natural/lib/natural/stemmers/porter_stemmer_ru'
 const porterStemmer = require('natural/lib/natural/stemmers/porter_stemmer');
 
 const URL_REG_EXP = /(https?|chrome):\/\/[^\s$.?#].[^\s]*/gm;
-const clear = (sentence) => sentence.replace(URL_REG_EXP, '').toLowerCase();
+const DOUBLE_SPACE_REG_EXP = /\s+/g;
+const SPACE = ' ';
+const EMPTY = '';
+const clear = (sentence) =>
+  sentence
+    .replace(DOUBLE_SPACE_REG_EXP, SPACE)
+    .replace(URL_REG_EXP, EMPTY)
+    .toLowerCase();
 
 const WORD_REG_EXP = /[^A-Za-zА-Яа-я0-9_]+/gim;
 const tokenize = (sentence) =>
@@ -29,7 +36,7 @@ const STOP_WORDS = {
 
   // movies
   trailer: true,
-  
+
   // music
   offici: true,
   music: true,
