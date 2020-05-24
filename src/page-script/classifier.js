@@ -18,13 +18,12 @@ class Classifier {
     return words.some((word) => this.wordsMap[word]);
   }
 
-  getSimilarWorlds(words) {
-    const sameWords = words.filter((word) => this.wordsMap[word]);
-    if (!sameWords.length) {
-      return null;
-    }
+  reset() {
+    this.wordsMap = {};
+  }
 
-    return sameWords;
+  getSimilarWords(words) {
+    return words.filter((word) => this.wordsMap[word]);
   }
 }
 

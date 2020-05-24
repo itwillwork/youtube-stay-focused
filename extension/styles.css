@@ -7,3 +7,11 @@
 	filter: none;
 	opacity: 1;
 }
+
+.youtube-stay-focused__similar-words {
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	background: lightblue;
+	padding: 4px;
+}
