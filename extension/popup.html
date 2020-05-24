@@ -17,7 +17,20 @@
 		}
 
 		.content {
+			position: relative;
 			padding: 16px;
+		}
+
+		.loader {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: rgba(255, 255, 255, 0.8);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.title {
@@ -58,8 +71,13 @@
 		    word-wrap: break-word;
     		border-radius: 2px;
 		    padding: 8px;
-		    margin-bottom: 16px;
 		    display: none;
+		    margin-bottom: 8px;
+		}
+
+		.footer {
+			font-size: 12px;
+			text-align: right;
 		}
 	</style>
 </head>
@@ -87,9 +105,15 @@
 				<label for="options:debug">Включить debug режим</label>
 		  	</div>
 	  	</div>
-	</div>
-  	<div class="warning">
-  		Изменения вступят в силу через 3-5 секунд, или нужно будет обновить страницу.
+	  	<div class="warning">
+	  		Изменения вступят в силу через 3-5 секунд, или нужно будет обновить страницу.
+	  	</div>
+  	  	<div class="loader">
+  	  		<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" width="64px" height="64px" viewBox="0 0 128 128" xml:space="preserve"><rect x="0" y="0" width="100%" height="100%" fill="#FFFFFF" /><g><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#000000" fill-opacity="1"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(45 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(90 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(135 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(180 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(225 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(270 64 64)"/><path d="M38.52 33.37L21.36 16.2A63.6 63.6 0 0 1 59.5.16v24.3a39.5 39.5 0 0 0-20.98 8.92z" fill="#c0c0c0" fill-opacity="0.25" transform="rotate(315 64 64)"/><animateTransform attributeName="transform" type="rotate" values="0 64 64;45 64 64;90 64 64;135 64 64;180 64 64;225 64 64;270 64 64;315 64 64" calcMode="discrete" dur="720ms" repeatCount="indefinite"></animateTransform></g></svg>
+  	  	</div>
+	  	<div class="footer">
+	  		<a href="https://github.com/itwillwork/youtube-stay-focused" target="_blank">GitHub</a>
+	  	</div>
   	</div>
 	<script src="popup-script.js"></script>
 </body>

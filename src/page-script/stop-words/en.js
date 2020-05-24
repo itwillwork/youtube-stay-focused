@@ -20,4 +20,9 @@ export default {
   prod: true,
   feat: true,
   dir: true,
+  lil: true, // rappers
+
+  // prepositions start
+  with: true,
+  // prepositions end
 };

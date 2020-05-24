@@ -20,15 +20,20 @@ class Looper {
   }
 
   updateConfig(callback) {
-    chrome.storage.local.get([STORAGE_CONFIG_KEY], (result) => {
-      callback({
-        ...DEFAULT_CONFIG,
-        ...(result[STORAGE_CONFIG_KEY] || {}),
+    try {
+      chrome.storage.local.get([STORAGE_CONFIG_KEY], (result) => {
+        callback({
+          ...DEFAULT_CONFIG,
+          ...(result[STORAGE_CONFIG_KEY] || {}),
+        });
       });
-    });
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
   loop() {
+    this.logger.log('loop');
     this.updateConfig((config) => {
       const { logger, domManipulator, classifier } = this;
 
@@ -37,15 +42,15 @@ class Looper {
         domManipulator.removeAllSimilarWords();
         domManipulator.removeTrendsBlur();
         domManipulator.removeMainRecommendsBlur();
+        this.prevConfig = config;
+        logger.log('not active!');
         return;
       }
 
-      const isSearchResultsPage = document.location.href.includes('/results');
-      if (
-        config['options:trends'] &&
-        domManipulator.hasTrends() &&
-        !isSearchResultsPage
-      ) {
+      const isSearchResultsPage =
+        document.location.href.includes('/results') &&
+        domManipulator.hasTrends();
+      if (config['options:trends'] && !isSearchResultsPage) {
         domManipulator.blurTrends();
       } else {
         domManipulator.removeTrendsBlur();
@@ -59,6 +64,8 @@ class Looper {
 
       const isWatchingVideoPage = document.location.href.includes('/watch');
       if (!isWatchingVideoPage) {
+        this.prevConfig = config;
+        logger.log('is not watching video page');
         return;
       }
 
@@ -80,6 +87,7 @@ class Looper {
         JSON.stringify(config) === JSON.stringify(this.prevConfig);
 
       if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {
+        logger.log('skip! cache');
         return;
       }
 

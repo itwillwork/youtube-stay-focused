@@ -6,7 +6,6 @@ describe('classifier', () => {
     classifier.addWords(['hello', 'world']);
 
     const verdict = classifier.classify(['world']);
-
     expect(verdict).toBe(true);
   });
 

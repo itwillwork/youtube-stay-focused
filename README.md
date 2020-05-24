@@ -16,3 +16,17 @@ https://chrome.google.com/webstore/detail/youtube-stay-focused/enhfmpfmofdnhelhe
 	MVP;
 1.1
 	Добавление стоп слов;
+
+1.2 
+	Исправления ошибок;
+
+===================
+
+
+2.
+иконку
+// https://www.iconfinder.com/search/?q=youtube&from=navbar
+
+4.
+отзыв
+больше скриншотов
