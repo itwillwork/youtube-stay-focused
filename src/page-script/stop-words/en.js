@@ -1,6 +1,8 @@
 export default {
   // common
   the: true,
+  top: true,
+  and: true,
 
   // youtube
   recommend: true,

@@ -56,4 +56,7 @@ export default {
   зачемнибуд: true,
   чейлиб: true,
   // местоимения end
+
+  нов: true,
+  выпуск: true,
 };
