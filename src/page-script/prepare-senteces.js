@@ -1,5 +1,7 @@
-const porterStemmerRu = require('natural/lib/natural/stemmers/porter_stemmer_ru');
-const porterStemmer = require('natural/lib/natural/stemmers/porter_stemmer');
+import porterStemmerRu from 'natural/lib/natural/stemmers/porter_stemmer_ru';
+import porterStemmer from 'natural/lib/natural/stemmers/porter_stemmer';
+
+import stopWords from './stop-words';
 
 const URL_REG_EXP = /(https?|chrome):\/\/[^\s$.?#].[^\s]*/gm;
 const DOUBLE_SPACE_REG_EXP = /\s+/g;
@@ -23,35 +25,11 @@ const stem = (words) =>
 const NUMBER_REG_EXP = /^\d+$/;
 const MINIMAL_WORLD_LENGTH = 3;
 
-const STOP_WORDS = {
-  // common
-  the: true,
-
-  // youtube
-  recommend: true,
-  for: true,
-  you: true,
-  topic: true,
-  youtub: true,
-
-  // movies
-  trailer: true,
-
-  // music
-  offici: true,
-  music: true,
-  video: true,
-  audio: true,
-  prod: true,
-  feat: true,
-  dir: true,
-};
-
 const filterMeaningfulWords = (words) => {
   return words
     .filter((word) => !NUMBER_REG_EXP.test(word))
     .filter((word) => word.length >= MINIMAL_WORLD_LENGTH)
-    .filter((word) => !STOP_WORDS[word]);
+    .filter((word) => !stopWords[word]);
 };
 
 export default (sentences) =>

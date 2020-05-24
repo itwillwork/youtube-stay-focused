@@ -1,10 +1,11 @@
 {
   "manifest_version": 2,
-  "version": "1.1",
+  "version": "1.2",
   "name": "youtube-stay-focused",
   "description": "Скрываем НЕ тематические рекомендации YouTube",
   "browser_action": {
-    "default_icon": "logo.png"
+    "default_icon": "logo.png",
+    "default_popup": "popup.html"
   },
   "content_scripts": [
     {
@@ -20,6 +21,7 @@
       "128": "logo.png"
     },
   "permissions": [
-    "https://www.youtube.com/*"
+    "https://www.youtube.com/*",
+    "storage"
   ]
 }

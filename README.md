@@ -10,3 +10,9 @@
 https://chrome.google.com/webstore/detail/youtube-stay-focused/enhfmpfmofdnhelhegdjanoaomlcieen
 <br />
 <br />
+
+**Release Notes:**
+1.0
+	MVP;
+1.1
+	Добавление стоп слов;
