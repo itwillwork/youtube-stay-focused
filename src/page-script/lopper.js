@@ -47,22 +47,29 @@ class Looper {
         return;
       }
 
-      const isSearchResultsPage =
-        document.location.href.includes('/results') &&
-        domManipulator.hasTrends();
-      if (config['options:trends'] && !isSearchResultsPage) {
+      const isTrendsPage = document.location.pathname === '/feed/trending';
+      if (
+        config['options:trends'] &&
+        isTrendsPage &&
+        domManipulator.hasTrends()
+      ) {
         domManipulator.blurTrends();
       } else {
         domManipulator.removeTrendsBlur();
       }
 
-      if (config['options:main'] && domManipulator.hasMainRecommends()) {
+      const isMainPage = document.location.pathname === '/';
+      if (
+        config['options:main'] &&
+        isMainPage &&
+        domManipulator.hasMainRecommends()
+      ) {
         domManipulator.blurMainRecommends();
       } else {
         domManipulator.removeMainRecommendsBlur();
       }
 
-      const isWatchingVideoPage = document.location.href.includes('/watch');
+      const isWatchingVideoPage = document.location.pathname === '/watch';
       if (!isWatchingVideoPage) {
         this.prevConfig = config;
         logger.log('is not watching video page');
