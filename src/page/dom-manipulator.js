@@ -22,7 +22,7 @@ const SELECTORS = {
   similarWords: `.${CSS_CLASSNAMES.similarWords}`,
 };
 
-const hasValue = (value) => !!value;
+const hasValue = value => !!value;
 
 class DomManipulator {
   getSourceNodes() {
@@ -51,14 +51,14 @@ class DomManipulator {
 
   blurTrends() {
     const trendsNodes = this.getTrendsNodes();
-    trendsNodes.forEach((node) => {
+    trendsNodes.forEach(node => {
       this.addBlur(node);
     });
   }
 
   removeTrendsBlur() {
     const trendsNodes = this.getTrendsNodes();
-    trendsNodes.forEach((node) => {
+    trendsNodes.forEach(node => {
       node.classList.remove(CSS_CLASSNAMES.blur);
     });
   }
@@ -75,14 +75,14 @@ class DomManipulator {
 
   blurMainRecommends() {
     const mainRecommendsNodes = this.getMainRecommendsNodes();
-    mainRecommendsNodes.forEach((node) => {
+    mainRecommendsNodes.forEach(node => {
       this.addBlur(node);
     });
   }
 
   removeMainRecommendsBlur() {
     const mainRecommendsNodes = this.getMainRecommendsNodes();
-    mainRecommendsNodes.forEach((node) => {
+    mainRecommendsNodes.forEach(node => {
       node.classList.remove(CSS_CLASSNAMES.blur);
     });
   }
@@ -117,7 +117,7 @@ class DomManipulator {
 
   removeAllBlur() {
     const recommendsNodes = this.getRecomendsNodes();
-    recommendsNodes.forEach((node) => {
+    recommendsNodes.forEach(node => {
       node.classList.remove(CSS_CLASSNAMES.blur);
     });
   }
@@ -125,7 +125,7 @@ class DomManipulator {
   removeAllSimilarWords() {
     const similarWordsNodes = document.querySelectorAll(SELECTORS.similarWords);
 
-    similarWordsNodes.forEach((node) => {
+    similarWordsNodes.forEach(node => {
       const { parentNode } = node;
       if (!parentNode) {
         return;

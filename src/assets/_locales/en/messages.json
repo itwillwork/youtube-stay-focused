@@ -1,0 +1,23 @@
+{
+    "appDesc": {
+        "message": "appDesc"
+    },
+    "ui_isActive": {
+    	"message": "ui_isActive"
+    },
+    "ui_advancedSettings": {
+    	"message": "ui_advancedSettings"
+    },
+    "ui_advancedSettings_option_main": {
+    	"message": "ui_advancedSettings_option_main"
+    },
+    "ui_advancedSettings_option_trends": {
+    	"message": "ui_advancedSettings_option_trends"
+    },
+    "ui_advancedSettings_option_debug": {
+    	"message": "ui_advancedSettings_option_debug"
+    },
+    "ui_advancedSettings_warning": {
+    	"message": "ui_advancedSettings_warning"
+    }
+}

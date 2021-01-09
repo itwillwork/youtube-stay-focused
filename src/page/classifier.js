@@ -15,7 +15,7 @@ class Classifier {
   }
 
   classify(words) {
-    return words.some((word) => this.wordsMap[word]);
+    return words.some(word => this.wordsMap[word]);
   }
 
   reset() {
@@ -23,7 +23,7 @@ class Classifier {
   }
 
   getSimilarWords(words) {
-    return words.filter((word) => this.wordsMap[word]);
+    return words.filter(word => this.wordsMap[word]);
   }
 }
 

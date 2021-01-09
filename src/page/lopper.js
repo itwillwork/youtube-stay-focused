@@ -21,7 +21,7 @@ class Looper {
 
   updateConfig(callback) {
     try {
-      chrome.storage.local.get([STORAGE_CONFIG_KEY], (result) => {
+      chrome.storage.local.get([STORAGE_CONFIG_KEY], result => {
         callback({
           ...DEFAULT_CONFIG,
           ...(result[STORAGE_CONFIG_KEY] || {}),
@@ -34,7 +34,7 @@ class Looper {
 
   loop() {
     this.logger.log('loop');
-    this.updateConfig((config) => {
+    this.updateConfig(config => {
       const { logger, domManipulator, classifier } = this;
 
       if (!config['params:isActive']) {
@@ -108,7 +108,7 @@ class Looper {
 
       classifier.reset();
 
-      preparedSourceSenteces.forEach((words) => {
+      preparedSourceSenteces.forEach(words => {
         classifier.addWords(words);
       });
 
@@ -134,7 +134,7 @@ class Looper {
   }
 
   init(config) {
-    this.updateConfig((config) => {
+    this.updateConfig(config => {
       const debouncedLoop = throttle(this.loop, config['options:coldTime']);
 
       debouncedLoop();

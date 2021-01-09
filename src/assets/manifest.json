@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
-  "version": "1.5",
+  "version": "1.6",
   "name": "youtube-stay-focused",
-  "description": "Скрываем НЕ тематические рекомендации YouTube",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
   "browser_action": {
     "default_icon": "logo-32.png",
     "default_popup": "popup.html"

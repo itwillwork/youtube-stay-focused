@@ -1,0 +1,23 @@
+{
+    "appDesc": {
+        "message": "Скрываем НЕ тематические рекомендации YouTube"
+    },
+    "ui_isActive": {
+    	"message": "Включить автоматическое скрытие отвлекающих рекомендаций"
+    },
+    "ui_advancedSettings": {
+    	"message": "Расширенные настройки"
+    },
+    "ui_advancedSettings_option_main": {
+    	"message": "Cкрывать все видео на главной"
+    },
+    "ui_advancedSettings_option_trends": {
+    	"message": "Cкрывать все видео в трендах"
+    },
+    "ui_advancedSettings_option_debug": {
+    	"message": "Включить debug режим"
+    },
+    "ui_advancedSettings_warning": {
+    	"message": "Изменения вступят в силу через 3-5 секунд, или нужно будет обновить страницу."
+    }
+}

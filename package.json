@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:page && npm run build:popup",
-    "build:page": "webpack src/page-script/index.js -o extension/page-script.js --mode production",
-    "build:popup": "webpack src/popup-script/index.js -o extension/popup-script.js --mode production",
+    "build": "rm -rf dist && webpack --config webpack.config.js",
     "format": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
     "test": "jest"
   },
@@ -21,6 +19,8 @@
     "@babel/preset-env": "^7.9.6",
     "babel-jest": "^26.0.1",
     "chalk": "^4.0.0",
+    "copy-webpack-plugin": "6.4.1",
+    "html-webpack-plugin": "^4.5.1",
     "jest": "^26.0.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"

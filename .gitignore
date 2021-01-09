@@ -7,3 +7,4 @@ webpack
 packages.cache.json
 npm-debug.log
 .npmrc
+dist

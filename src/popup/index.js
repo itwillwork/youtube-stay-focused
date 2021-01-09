@@ -30,11 +30,11 @@ const removeLoader = () => {
   parentNode.removeChild(loaderNode);
 };
 
-const inputInitialize = (config) => {
+const inputInitialize = config => {
   const inputNodesCollection = document.getElementsByTagName('input');
   const inputNodes = Array.prototype.slice.call(inputNodesCollection);
 
-  inputNodes.forEach((node) => {
+  inputNodes.forEach(node => {
     const { name } = node;
 
     node.checked = !!config[name];
@@ -47,7 +47,7 @@ const OPTIONS_OPACITY = {
   ENABLED: 1,
   DISABLED: 0.2,
 };
-const toggleOptions = (isActive) => {
+const toggleOptions = isActive => {
   const optionsNode = document.querySelector('.options');
 
   if (!optionsNode) {
@@ -58,14 +58,14 @@ const toggleOptions = (isActive) => {
   optionsNode.style.opacity = opacity;
 };
 
-const changeParams = (event) => {
+const changeParams = event => {
   const { name, checked } = event.target;
 
   if (name === 'params:isActive') {
     toggleOptions(checked);
   }
 
-  chrome.storage.local.get([STORAGE_CONFIG_KEY], (storageResult) => {
+  chrome.storage.local.get([STORAGE_CONFIG_KEY], storageResult => {
     const config = storageResult[STORAGE_CONFIG_KEY] || {};
 
     const newConfig = {
@@ -74,7 +74,7 @@ const changeParams = (event) => {
       [name]: checked,
     };
 
-    chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: newConfig }, function () {
+    chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: newConfig }, function() {
       // nothing
     });
   });
@@ -83,7 +83,7 @@ const changeParams = (event) => {
 };
 
 const init = () => {
-  chrome.storage.local.get([STORAGE_CONFIG_KEY], (storageResult) => {
+  chrome.storage.local.get([STORAGE_CONFIG_KEY], storageResult => {
     const config = storageResult[STORAGE_CONFIG_KEY] || DEFAULT_CONFIG;
 
     inputInitialize(config);
@@ -95,3 +95,41 @@ const init = () => {
 };
 
 init();
+
+const localizeHtmlPage = () => {
+  // Localize by replacing __MSG_***__ meta tags
+  const nodes = document.getElementsByTagName('html');
+
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    const rawValue = node.innerHTML.toString();
+    const preparedValue = rawValue.replace(/__MSG_(\w+)__/g, (match, v1) => {
+      return v1 ? chrome.i18n.getMessage(v1) : '';
+    });
+
+    if (preparedValue != rawValue) {
+      node.innerHTML = preparedValue;
+    }
+  }
+};
+
+localizeHtmlPage();
+
+// function localizeHtmlPage() {
+//   //Localize by replacing __MSG_***__ meta tags
+//   var objects = document.getElementsByTagName('html');
+//   for (var j = 0; j < objects.length; j++) {
+//     var obj = objects[j];
+
+//     var valStrH = obj.innerHTML.toString();
+//     var valNewH = valStrH.replace(/__MSG_(\w+)__/g, function(match, v1) {
+//       return v1 ? chrome.i18n.getMessage(v1) : '';
+//     });
+
+//     if (valNewH != valStrH) {
+//       obj.innerHTML = valNewH;
+//     }
+//   }
+// }
+
+// localizeHtmlPage();
