@@ -21,7 +21,7 @@ class Looper {
 
   updateConfig(callback) {
     try {
-      chrome.storage.local.get([STORAGE_CONFIG_KEY], (result) => {
+      chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((result) => {
         callback({
           ...DEFAULT_CONFIG,
           ...(result[STORAGE_CONFIG_KEY] || {}),
@@ -93,10 +93,11 @@ class Looper {
       const isSameConfig =
         JSON.stringify(config) === JSON.stringify(this.prevConfig);
 
-      if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {
-        logger.log('skip! cache');
-        return;
-      }
+      // TODO debug
+      // if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {
+      //   logger.log('skip! cache');
+      //   return;
+      // }
 
       logger.log('has new sourceSentences or recommendsSentences');
       this.prevSourceSentences = sourceSentences;
@@ -137,7 +138,8 @@ class Looper {
     this.updateConfig((config) => {
       const debouncedLoop = throttle(this.loop, config['options:coldTime']);
 
-      debouncedLoop();
+      setTimeout(debouncedLoop, config['options:fitstCheckInterval']);
+      setTimeout(debouncedLoop, config['options:secondCheckInterval']);
       setInterval(debouncedLoop, config['options:checkInterval']);
       window.addEventListener('scroll', debouncedLoop);
     });

@@ -65,7 +65,7 @@ const changeParams = (event) => {
     toggleOptions(checked);
   }
 
-  chrome.storage.local.get([STORAGE_CONFIG_KEY], (storageResult) => {
+  chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((storageResult) => {
     const config = storageResult[STORAGE_CONFIG_KEY] || {};
 
     const newConfig = {
@@ -74,7 +74,7 @@ const changeParams = (event) => {
       [name]: checked,
     };
 
-    chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: newConfig }, function () {
+    chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: newConfig }).then(function () {
       // nothing
     });
   });
@@ -83,7 +83,7 @@ const changeParams = (event) => {
 };
 
 const init = () => {
-  chrome.storage.local.get([STORAGE_CONFIG_KEY], (storageResult) => {
+  chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((storageResult) => {
     const config = storageResult[STORAGE_CONFIG_KEY] || DEFAULT_CONFIG;
 
     inputInitialize(config);

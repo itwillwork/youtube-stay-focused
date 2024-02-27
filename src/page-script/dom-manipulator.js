@@ -5,20 +5,19 @@ const CSS_CLASSNAMES = {
 
 const SELECTORS = {
   source: {
-    title: 'h1',
-    description: '#description',
-    channelName:
-      '#meta-contents a.yt-simple-endpoint.style-scope.yt-formatted-string',
+    title: 'ytd-watch-metadata h1',
+    description: 'ytd-watch-metadata #snippet-text',
+    channelName: 'ytd-watch-metadata #channel-name',
   },
   recommendations: {
-    container: 'ytd-compact-video-renderer',
+    container: 'ytd-rich-item-renderer #content',
     node: {
       title: '#video-title',
       channelName: '#channel-name yt-formatted-string',
     },
   },
-  trends: 'ytd-video-renderer',
-  mainRecommends: 'ytd-rich-item-renderer',
+  trends: 'ytd-video-renderer #content',
+  mainRecommends: 'ytd-rich-item-renderer #content',
   similarWords: `.${CSS_CLASSNAMES.similarWords}`,
 };
 
@@ -104,7 +103,13 @@ class DomManipulator {
   }
 
   addBlur(node) {
-    node.classList.add(CSS_CLASSNAMES.blur);
+    const { classList } = node
+
+    if (classList.contains(CSS_CLASSNAMES.blur)) {
+      return
+    }
+
+    classList.add(CSS_CLASSNAMES.blur);
   }
 
   showSimilarWords(node, similarWords) {
