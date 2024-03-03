@@ -1,3 +1,6 @@
+import uniq from 'lodash/uniq';
+
+
 const CSS_CLASSNAMES = {
   blur: 'youtube-stay-focused__blur',
   similarWords: 'youtube-stay-focused__similar-words',
@@ -53,7 +56,7 @@ class DomManipulator {
 
   getNodes(selector, fallbackSelector) {
     let recomendsCollection = document.querySelectorAll(selector) || [];
-    if (recomendsCollection && !recomendsCollection.length) {
+    if (recomendsCollection && !recomendsCollection.length && fallbackSelector) {
       recomendsCollection = document.querySelectorAll(fallbackSelector) || [];
     }
 
@@ -61,7 +64,10 @@ class DomManipulator {
   }
 
   getTrendsNodes() {
-    return this.getNodes(SELECTORS.trends, OLD_DESIGN_SELECTORS.trends);
+    return uniq([
+        ...this.getNodes(SELECTORS.trends),
+        ...this.getNodes(OLD_DESIGN_SELECTORS.trends),
+    ]);
   }
 
   hasTrends() {
@@ -85,7 +91,10 @@ class DomManipulator {
   }
 
   getMainRecommendsNodes() {
-    return this.getNodes(SELECTORS.mainRecommends, OLD_DESIGN_SELECTORS.mainRecommends);
+    return uniq([
+        ...this.getNodes(SELECTORS.mainRecommends),
+        ...this.getNodes(OLD_DESIGN_SELECTORS.mainRecommends),
+    ]);
   }
 
   hasMainRecommends() {
@@ -109,7 +118,10 @@ class DomManipulator {
   }
 
   getRecomendsNodes() {
-    return this.getNodes(SELECTORS.recommendations.container, OLD_DESIGN_SELECTORS.recommendations.container);
+    return uniq([
+        ...this.getNodes(SELECTORS.recommendations.container),
+        ...this.getNodes(OLD_DESIGN_SELECTORS.recommendations.container),
+    ]);
   }
 
   getRecomendSentence(node) {
@@ -144,7 +156,7 @@ class DomManipulator {
     node.appendChild(similarWordsNode);
   }
 
-  removeAllBlur() {
+  removeRecommendsNodesAllBlur() {
     const recommendsNodes = this.getRecomendsNodes();
     recommendsNodes.forEach((node) => {
       node.classList.remove(CSS_CLASSNAMES.blur);

@@ -39,7 +39,7 @@ class Looper {
       const { logger, domManipulator, classifier } = this;
 
       if (!config['params:isActive']) {
-        domManipulator.removeAllBlur();
+        domManipulator.removeRecommendsNodesAllBlur();
         domManipulator.removeAllSimilarWords();
         domManipulator.removeTrendsBlur();
         domManipulator.removeMainRecommendsBlur();
@@ -74,6 +74,8 @@ class Looper {
       if (!isWatchingVideoPage) {
         this.prevConfig = config;
         logger.log('is not watching video page');
+        domManipulator.removeRecommendsNodesAllBlur();
+        domManipulator.removeAllSimilarWords();
         return;
       }
 
@@ -120,18 +122,26 @@ class Looper {
         }
       );
 
-      domManipulator.removeAllBlur();
+      domManipulator.removeRecommendsNodesAllBlur();
       domManipulator.removeAllSimilarWords();
 
-      similarSentencesWords.forEach((similarWords, index) => {
-        if (!similarWords.length) {
-          domManipulator.addBlur(recommendsNodes[index]);
-        }
+      const isBlurAllRecommendations = config['options:recommends'];
+      if (isBlurAllRecommendations) {
+        recommendsNodes.forEach((recommendsNode, index) => {
+          domManipulator.addBlur(recommendsNode);
+        });
+      } else {
+        similarSentencesWords.forEach((similarWords, index) => {
+          if (!similarWords.length) {
+            domManipulator.addBlur(recommendsNodes[index]);
+          }
 
-        if (config['options:debug'] && similarWords.length) {
-          domManipulator.showSimilarWords(recommendsNodes[index], similarWords);
-        }
-      });
+          if (config['options:debug'] && similarWords.length) {
+            domManipulator.showSimilarWords(recommendsNodes[index], similarWords);
+          }
+        });
+      }
+
     });
   }
 
@@ -140,7 +150,6 @@ class Looper {
       const debouncedLoop = throttle(this.loop, config['options:coldTime']);
 
       setTimeout(debouncedLoop, config['options:fitstCheckInterval']);
-      setTimeout(debouncedLoop, config['options:secondCheckInterval']);
       setInterval(debouncedLoop, config['options:checkInterval']);
       window.addEventListener('scroll', debouncedLoop);
     });
