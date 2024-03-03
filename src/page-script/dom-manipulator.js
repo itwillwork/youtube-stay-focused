@@ -21,25 +21,47 @@ const SELECTORS = {
   similarWords: `.${CSS_CLASSNAMES.similarWords}`,
 };
 
+const OLD_DESIGN_SELECTORS = {
+  source: {
+    title: 'h1',
+    description: '#description',
+    channelName:
+        '#meta-contents a.yt-simple-endpoint.style-scope.yt-formatted-string',
+  },
+  recommendations: {
+    container: 'ytd-compact-video-renderer',
+    node: {
+      title: '#video-title',
+      channelName: '#channel-name yt-formatted-string',
+    },
+  },
+  trends: 'ytd-video-renderer',
+  mainRecommends: 'ytd-rich-item-renderer',
+  similarWords: `.${CSS_CLASSNAMES.similarWords}`,
+};
+
 const hasValue = (value) => !!value;
 
 class DomManipulator {
   getSourceNodes() {
     return [
-      document.querySelector(SELECTORS.source.title),
-      document.querySelector(SELECTORS.source.description),
-      document.querySelector(SELECTORS.source.channelName),
+      document.querySelector(SELECTORS.source.title) || document.querySelector(OLD_DESIGN_SELECTORS.source.title),
+      document.querySelector(SELECTORS.source.description) || document.querySelector(OLD_DESIGN_SELECTORS.source.description),
+      document.querySelector(SELECTORS.source.channelName) || document.querySelector(OLD_DESIGN_SELECTORS.source.channelName),
     ].filter(hasValue);
   }
 
-  getNodes(selector) {
-    const recomendsCollection = document.querySelectorAll(selector);
+  getNodes(selector, fallbackSelector) {
+    let recomendsCollection = document.querySelectorAll(selector) || [];
+    if (recomendsCollection && !recomendsCollection.length) {
+      recomendsCollection = document.querySelectorAll(fallbackSelector) || [];
+    }
 
     return Array.prototype.slice.call(recomendsCollection).filter(hasValue);
   }
 
   getTrendsNodes() {
-    return this.getNodes(SELECTORS.trends);
+    return this.getNodes(SELECTORS.trends, OLD_DESIGN_SELECTORS.trends);
   }
 
   hasTrends() {
@@ -63,7 +85,7 @@ class DomManipulator {
   }
 
   getMainRecommendsNodes() {
-    return this.getNodes(SELECTORS.mainRecommends);
+    return this.getNodes(SELECTORS.mainRecommends, OLD_DESIGN_SELECTORS.mainRecommends);
   }
 
   hasMainRecommends() {
@@ -87,13 +109,15 @@ class DomManipulator {
   }
 
   getRecomendsNodes() {
-    return this.getNodes(SELECTORS.recommendations.container);
+    return this.getNodes(SELECTORS.recommendations.container, OLD_DESIGN_SELECTORS.recommendations.container);
   }
 
   getRecomendSentence(node) {
-    const titleNode = node.querySelector(SELECTORS.recommendations.node.title);
+    const titleNode = node.querySelector(SELECTORS.recommendations.node.title) || node.querySelector(OLD_DESIGN_SELECTORS.recommendations.node.title);
     const channelNameNode = node.querySelector(
       SELECTORS.recommendations.node.channelName
+    ) || node.querySelector(
+        OLD_DESIGN_SELECTORS.recommendations.node.channelName
     );
 
     return [
@@ -128,8 +152,7 @@ class DomManipulator {
   }
 
   removeAllSimilarWords() {
-    const similarWordsNodes = document.querySelectorAll(SELECTORS.similarWords);
-
+    const similarWordsNodes = this.getNodes(SELECTORS.similarWords, OLD_DESIGN_SELECTORS.similarWords);
     similarWordsNodes.forEach((node) => {
       const { parentNode } = node;
       if (!parentNode) {
