@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "2.0",
+  "version": "2.1",
   "name": "youtube-stay-focused",
   "description": "\u0421\u043a\u0440\u044b\u0432\u0430\u0435\u043c \u041d\u0415 \u0442\u0435\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438\u0435 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0438\u0438 YouTube",
   "content_scripts": [

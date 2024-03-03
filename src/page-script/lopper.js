@@ -28,6 +28,7 @@ class Looper {
         });
       });
     } catch (error) {
+      console.warn(`updateConfig: can not get ${STORAGE_CONFIG_KEY}`);
       this.logger.error(error);
     }
   }
@@ -78,20 +79,20 @@ class Looper {
 
       const sourceNodes = domManipulator.getSourceNodes();
       const sourceSentences = sourceNodes.map(domManipulator.getSentence);
-      const isSameSourceSentences =
-        JSON.stringify(sourceSentences) ===
-        JSON.stringify(this.prevSourceSentences);
+      // const isSameSourceSentences =
+      //   JSON.stringify(sourceSentences) ===
+      //   JSON.stringify(this.prevSourceSentences);
 
       const recommendsNodes = domManipulator.getRecomendsNodes();
       const recommendsSentences = recommendsNodes.map(
         domManipulator.getRecomendSentence
       );
-      const isSameRecommendsSentences =
-        JSON.stringify(recommendsSentences) ===
-        JSON.stringify(this.prevRecommendsSentences);
-
-      const isSameConfig =
-        JSON.stringify(config) === JSON.stringify(this.prevConfig);
+      // const isSameRecommendsSentences =
+      //   JSON.stringify(recommendsSentences) ===
+      //   JSON.stringify(this.prevRecommendsSentences);
+      //
+      // const isSameConfig =
+      //   JSON.stringify(config) === JSON.stringify(this.prevConfig);
 
       // TODO debug
       // if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {

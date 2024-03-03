@@ -58,40 +58,55 @@ const toggleOptions = (isActive) => {
   optionsNode.style.opacity = opacity;
 };
 
-const changeParams = (event) => {
+const changeParams = async (event) => {
   const { name, checked } = event.target;
 
   if (name === 'params:isActive') {
     toggleOptions(checked);
   }
 
-  chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((storageResult) => {
-    const config = storageResult[STORAGE_CONFIG_KEY] || {};
+  let storageResult;
+  try {
+    storageResult = await chrome.storage.local.get([STORAGE_CONFIG_KEY]);
+  } catch (error) {
+    console.warn(`changeParams: Can not get ${STORAGE_CONFIG_KEY}`);
+    console.error(error);
+  }
 
-    const newConfig = {
-      ...DEFAULT_CONFIG,
-      ...config,
-      [name]: checked,
-    };
+  const config = (storageResult && storageResult[STORAGE_CONFIG_KEY]) || {};
 
-    chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: newConfig }).then(function () {
-      // nothing
-    });
-  });
+  const newConfig = {
+    ...DEFAULT_CONFIG,
+    ...config,
+    [name]: checked,
+  };
+
+  try {
+    await chrome.storage.local.set({[STORAGE_CONFIG_KEY]: newConfig});
+  } catch (error) {
+    console.warn(`changeParams: Can not set ${STORAGE_CONFIG_KEY}`);
+    console.error(error);
+  }
 
   showWarning();
 };
 
-const init = () => {
-  chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((storageResult) => {
-    const config = storageResult[STORAGE_CONFIG_KEY] || DEFAULT_CONFIG;
+const init = async () => {
+  let storageResult;
+  try {
+    storageResult = await chrome.storage.local.get([STORAGE_CONFIG_KEY]);
+  } catch (error) {
+    console.warn(`init: Can not get ${STORAGE_CONFIG_KEY}`);
+    console.error(error);
+  }
 
-    inputInitialize(config);
+  const config = (storageResult && storageResult[STORAGE_CONFIG_KEY]) || DEFAULT_CONFIG;
 
-    toggleOptions(config['params:isActive']);
+  inputInitialize(config);
 
-    removeLoader();
-  });
+  toggleOptions(config['params:isActive']);
+
+  removeLoader();
 };
 
 init();
