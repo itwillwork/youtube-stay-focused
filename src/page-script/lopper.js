@@ -21,13 +21,14 @@ class Looper {
 
   updateConfig(callback) {
     try {
-      chrome.storage.local.get([STORAGE_CONFIG_KEY], (result) => {
+      chrome.storage.local.get([STORAGE_CONFIG_KEY]).then((result) => {
         callback({
           ...DEFAULT_CONFIG,
           ...(result[STORAGE_CONFIG_KEY] || {}),
         });
       });
     } catch (error) {
+      console.warn(`updateConfig: can not get ${STORAGE_CONFIG_KEY}`);
       this.logger.error(error);
     }
   }
@@ -38,7 +39,7 @@ class Looper {
       const { logger, domManipulator, classifier } = this;
 
       if (!config['params:isActive']) {
-        domManipulator.removeAllBlur();
+        domManipulator.removeRecommendsNodesAllBlur();
         domManipulator.removeAllSimilarWords();
         domManipulator.removeTrendsBlur();
         domManipulator.removeMainRecommendsBlur();
@@ -73,30 +74,33 @@ class Looper {
       if (!isWatchingVideoPage) {
         this.prevConfig = config;
         logger.log('is not watching video page');
+        domManipulator.removeRecommendsNodesAllBlur();
+        domManipulator.removeAllSimilarWords();
         return;
       }
 
       const sourceNodes = domManipulator.getSourceNodes();
       const sourceSentences = sourceNodes.map(domManipulator.getSentence);
-      const isSameSourceSentences =
-        JSON.stringify(sourceSentences) ===
-        JSON.stringify(this.prevSourceSentences);
+      // const isSameSourceSentences =
+      //   JSON.stringify(sourceSentences) ===
+      //   JSON.stringify(this.prevSourceSentences);
 
       const recommendsNodes = domManipulator.getRecomendsNodes();
       const recommendsSentences = recommendsNodes.map(
         domManipulator.getRecomendSentence
       );
-      const isSameRecommendsSentences =
-        JSON.stringify(recommendsSentences) ===
-        JSON.stringify(this.prevRecommendsSentences);
+      // const isSameRecommendsSentences =
+      //   JSON.stringify(recommendsSentences) ===
+      //   JSON.stringify(this.prevRecommendsSentences);
+      //
+      // const isSameConfig =
+      //   JSON.stringify(config) === JSON.stringify(this.prevConfig);
 
-      const isSameConfig =
-        JSON.stringify(config) === JSON.stringify(this.prevConfig);
-
-      if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {
-        logger.log('skip! cache');
-        return;
-      }
+      // TODO debug
+      // if (isSameSourceSentences && isSameRecommendsSentences && isSameConfig) {
+      //   logger.log('skip! cache');
+      //   return;
+      // }
 
       logger.log('has new sourceSentences or recommendsSentences');
       this.prevSourceSentences = sourceSentences;
@@ -118,18 +122,26 @@ class Looper {
         }
       );
 
-      domManipulator.removeAllBlur();
+      domManipulator.removeRecommendsNodesAllBlur();
       domManipulator.removeAllSimilarWords();
 
-      similarSentencesWords.forEach((similarWords, index) => {
-        if (!similarWords.length) {
-          domManipulator.addBlur(recommendsNodes[index]);
-        }
+      const isBlurAllRecommendations = config['options:recommends'];
+      if (isBlurAllRecommendations) {
+        recommendsNodes.forEach((recommendsNode, index) => {
+          domManipulator.addBlur(recommendsNode);
+        });
+      } else {
+        similarSentencesWords.forEach((similarWords, index) => {
+          if (!similarWords.length) {
+            domManipulator.addBlur(recommendsNodes[index]);
+          }
 
-        if (config['options:debug'] && similarWords.length) {
-          domManipulator.showSimilarWords(recommendsNodes[index], similarWords);
-        }
-      });
+          if (config['options:debug'] && similarWords.length) {
+            domManipulator.showSimilarWords(recommendsNodes[index], similarWords);
+          }
+        });
+      }
+
     });
   }
 
@@ -137,7 +149,7 @@ class Looper {
     this.updateConfig((config) => {
       const debouncedLoop = throttle(this.loop, config['options:coldTime']);
 
-      debouncedLoop();
+      setTimeout(debouncedLoop, config['options:fitstCheckInterval']);
       setInterval(debouncedLoop, config['options:checkInterval']);
       window.addEventListener('scroll', debouncedLoop);
     });

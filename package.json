@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run build:page && npm run build:popup",
-    "build:page": "webpack src/page-script/index.js -o extension/page-script.js --mode production",
-    "build:popup": "webpack src/popup-script/index.js -o extension/popup-script.js --mode production",
+    "build:page": "export NODE_OPTIONS=--openssl-legacy-provider && webpack src/page-script/index.js -o extension/page-script.js --mode production",
+    "build:popup": "export NODE_OPTIONS=--openssl-legacy-provider && webpack src/popup-script/index.js -o extension/popup-script.js --mode production",
     "format": "prettier --single-quote --trailing-comma es5 --write \"src/**/*.js\"",
     "test": "jest"
   },
