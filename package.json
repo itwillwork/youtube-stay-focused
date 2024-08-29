@@ -22,7 +22,7 @@
     "babel-jest": "^26.0.1",
     "chalk": "^4.0.0",
     "jest": "^26.0.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   }
 }
